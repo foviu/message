@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Confession 💖</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="container">
+        <h1>A Special Message for You 💌</h1>
+        <button onclick="revealConfession()">Click to Reveal</button>
+
+        <p id="love-message" style="display:none;">
+            I've been meaning to say this for a long time... I love you. 💖<br>
+            You mean the world to me, and I hope this message makes you smile 😊<br><br>
+        </p>
+
+        <div id="response-buttons" style="display:none;">
+            <button onclick="acceptLove()">Yes, I feel the same ❤️</button>
+            <button onclick="rejectLove()">No, sorry 💔</button>
+            <p> Your response will be sent to the owner of the website (@txmoo)</p>
+        </div>
+
+        <p id="response-message" style="display:none;"></p>
+
+
+        <div id="comment-section" style="display:none; margin-top: 20px;">
+            <textarea id="user-comment" rows="4" cols="50" placeholder="Write your message here..."></textarea><br>
+            <button onclick="sendComment()">Send Message</button>
+            <p id="comment-status" style="color: lightgreen; margin-top:10px;"></p>
+          </div>
+
+
+        <div id="video-container" style="display:none;">
+            <!-- YouTube Embed -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/amy2fttDCb8" 
+                title="Love Video" frameborder="0" allowfullscreen></iframe>
+                <p id="love-message">
+                    "You made my day, so I want to give you this song." 💖
+                </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
