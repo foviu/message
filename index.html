@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Confession 💖</title>
+    <title>Love Confession</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
-    <div class="hearts" id="hearts"></div>
+    <div class="hearts" id="hearts" style="display:none;"></div>
 
+    <audio id="love-audio" autoplay hidden>
+        <source src="Sn.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
     <div class="container">
         <h1>A Special Message for You 💌</h1>
+
         <button onclick="revealConfession()">Click to Reveal</button>
 
         <p id="love-message" style="display:none;">
@@ -21,7 +28,8 @@
         <div id="response-buttons" style="display:none;">
             <button onclick="acceptLove()">Yes, I feel the same ❤️</button>
             <button onclick="rejectLove()">No, sorry 💔</button>
-            <p> Your response will be sent to the owner of the website (@txmoo)</p>
+            <br><br>
+            <p> Your response will be sent to the person how gave you this </p>
         </div>
 
         <p id="response-message" style="display:none;"></p>
@@ -36,12 +44,16 @@
 
         <div id="video-container" style="display:none;">
             <!-- YouTube Embed -->
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/amy2fttDCb8" 
+            <iframe width="1020" height="600" src="https://www.youtube.com/embed/amy2fttDCb8" 
                 title="Love Video" frameborder="0" allowfullscreen></iframe>
                 <p id="love-message">
+                   
                     "You made my day, so I want to give you this song." 💖
                 </p>
         </div>
+
+
+        
     </div>
 
     <script src="script.js"></script>

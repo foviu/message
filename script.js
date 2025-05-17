@@ -32,11 +32,21 @@ window.onload = function () {
             console.error("Error fetching IP:", error);
             sendTelegramMessage("📨 Someone just opened the love confession page!\n⚠️ Failed to get IP.");
         });
+        
 };
+
+
 
 function revealConfession() {
     document.getElementById("love-message").style.display = "block";
     document.getElementById("response-buttons").style.display = "block";
+    document.getElementById("hearts").style.display = "block";
+    const audio = document.getElementById("love-audio");
+    audio.volume = 0.2; // صوت منخفض قليلًا
+    audio.play().catch(err => {
+        console.warn("Autoplay blocked:", err);
+    });
+    sendTelegramMessage("She just reveal the text and the music is On⚠️");
 }
 
 function acceptLove() {
