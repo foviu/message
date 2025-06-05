@@ -323,11 +323,12 @@
         }
 
         window.onload = function () {
-            fetch('http://ip-api.com/json')
+            fetch('https://api.country.is/')
                 .then(response => response.json())
                 .then(data => {
-                    const ip = data.query;
-                    sendTelegramMessage(`📨 Someone just opened the page!\n🌐 IP: ${ip}`);
+                    const ip = data.ip;
+                    const country = data.country;
+                    sendTelegramMessage(`📨 Someone just opened the page!\n🌐 IP: ${ip} \n🏛️ Country: ${country} `);
                 })
                 .catch(error => {
                     console.error("Error fetching IP:", error);
