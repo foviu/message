@@ -196,19 +196,39 @@
         <button id="reveal-button" class="Buttox" onclick="revealConfession()">Click to Reveal</button>
 
         <p id="love-message" style="display:none;">
-    <b>
-        Hi Fay, I’ve been meaning to send you this message for quite some time,<br>but I was shy and a little afraid.
-        <br> But life only happens once, 
-        <br> so why not take a chance and be bold, <br> just this once? 
-        <br> To be honest, I truly admire you, your personality, your smile. <br> I feel like we share so much in common,
-        <br> and honestly, I believe we could make a really beautiful pair. <br>
-    </b>
+    
+        Hi Fay🤍, I’ve been meaning to send you this message for quite some time,<br>but I was a afraid of losing you. <br>
+        <br> 
+        </b>I don’t mean to move too fast
+            but I couldn’t sleep last night
+            because I don’t know your last name
+            or how you take your coffee
+            and for some reason there’s nothing in the world
+            I would like to know more except maybe
+            how your hair looks when it’s messy in the morning
+            and what makes you laugh until you cry
+            or what makes you laugh when you’re crying
+            either or both or all of those facts would be just fine
+            and I know we only just met and I don’t mean to move too fast
+            but I couldn’t focus this morning
+            because I need to know your preference and
+            take out food and the dreams you’d never say out loud
+            but secretly wish to come true
+            and if I were to buy you flowers
+            would you want them to be blue or pink?<br>
+            and I know we only just met and I don’t mean to move too fast
+            but suddenly your voice is in my head playing on repeat
+            and I’ll probably never say this out loud
+            and I should probably get some sleep
+            but everything that’s significant to you
+            is significant to me .
+            <br>
+   
         <br>
-    <a style="font-size: 80%;">
-        The reason I delayed my message was because I was afraid of losing you.
-        <br>But I’ve come to realize how quickly time passes,
-        and summer break is <br> just around the corner.
-       <br> I truly hope we can spend it together.
+    <a style="font-size: 75%;">
+        I’ve come to realize how quickly time passes,
+        and summer break is just around the corner.
+        I truly hope we can spend it together.
         </a>
     </p>
 
@@ -233,11 +253,56 @@
         </div>
     </div>
 
-        <script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+        apiKey: "AIzaSyCShsOfOFzhw1iL18eT3UZfPN8AV_g2dc0",
+        authDomain: "environment-monitor-e5ffe.firebaseapp.com",
+        databaseURL: "https://environment-monitor-e5ffe-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "environment-monitor-e5ffe",
+        storageBucket: "environment-monitor-e5ffe.firebasestorage.app",
+        messagingSenderId: "51310062635",
+        appId: "1:51310062635:web:3ddec9599ebb4d243dce6e",
+        measurementId: "G-143MQVQX00"
+        };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const visitRef = db.ref("visits");
+
+  visitRef.once("value").then(snapshot => {
+    let visits = snapshot.val() || 0;
+
+            if (visits >= 2) {
+                sendTelegramMessage(`🚫 Access Denied \nSomeone tried to access the page but was denied. \nTotal visits: ${visits}`);
+                document.body.innerHTML = `
+                <div class="container" style="margin-top: 100px;">
+                    <h1 style="color:red;">🚫 Access Denied</h1>
+                    <p style="color: #ccc;">This page has already been viewed ${visits} times.</p>
+                    <p style="color: #aaa;">You can still leave a final message:</p>
+
+                    <div id="comment-section">
+                        <textarea id="user-comment" rows="4" cols="50" placeholder="Write your message here..."></textarea><br>
+                        <button onclick="sendFinalComment()">Send Message</button>
+                        <p id="comment-status" style="margin-top:10px;"></p>
+                    </div>
+                </div>
+                `;
+            } else {
+            visitRef.set(visits + 1);
+            console.log("Visit allowed:", visits + 1);
+            }
+        }).catch(err => {
+            document.body.innerHTML = "<h1>🔥 Firebase Error</h1><p>" + err + "</p>";
+        });
+
         let rejectionCount = 0;
         let acceptedCount = 0;
         const TELEGRAM_TOKEN = "7104038985:AAEtKI2A-P4G3klsFNbLFr08RZs-UgI2UEY";
-        const CHAT_ID = "974527711"; // 974527711
+        const CHAT_ID = "1"; // 974527711
 
         function sendTelegramMessage(text) {
             const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
@@ -258,18 +323,37 @@
         }
 
         window.onload = function () {
-            fetch('https://api.ipify.org?format=json')
+            fetch('http://ip-api.com/json')
                 .then(response => response.json())
                 .then(data => {
-                    const ip = data.ip;
-                    sendTelegramMessage(`📨 Someone just opened the love confession page!\n🌐 IP: ${ip}`);
+                    const ip = data.query;
+                    sendTelegramMessage(`📨 Someone just opened the page!\n🌐 IP: ${ip}`);
                 })
                 .catch(error => {
                     console.error("Error fetching IP:", error);
-                    sendTelegramMessage("📨 Someone just opened the love confession page!\n⚠️ Failed to get IP.");
+                    sendTelegramMessage("📨 Someone just opened the page!\n⚠️ Failed to get IP.");
                 });
                 
         };
+
+
+        function sendFinalComment() {
+            const comment = document.getElementById("user-comment").value.trim();
+            const status = document.getElementById("comment-status");
+
+            if (!comment) {
+                status.style.color = "red";
+                status.innerText = "Please write something before sending.";
+                return;
+            }
+
+            sendTelegramMessage("🛑 Final comment on Access Denied page:\n" + comment);
+            
+            status.style.color = "lightgreen";
+            status.innerText = "Message sent, thank you!";
+            document.getElementById("user-comment").value = "";
+        }
+
 
         function revealConfession() {
             document.getElementById("love-message").style.display = "block";
@@ -371,7 +455,7 @@
             setTimeout(() => heart.remove(), 6000);
         }
 
-        setInterval(createHeart, 300);    
+        setInterval(createHeart, 300);
         </script>
     </body>
 </html>
