@@ -445,6 +445,7 @@
             document.getElementById("comment-section").style.display = "block";
             document.getElementById("response-buttons").style.display = "none";
             sendTelegramMessage("✅ She accepted the confession! ❤️");
+                visitRef.set(2); // to acss denied page
 
             }
         }
@@ -464,6 +465,7 @@
                 document.getElementById("comment-section").style.display = "block";
                 document.getElementById("response-buttons").style.display = "none";
                 sendTelegramMessage("❌ She confirmed the rejection. 💔💔");
+                    visitRef.set(2); // to acss denied page
             }
         }
 
