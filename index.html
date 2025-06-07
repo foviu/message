@@ -234,11 +234,6 @@
     I want to know what makes <span class="highlightYou">you</span> laugh so hard <span class="highlightYou">you</span> lose your breath<br>
     and what makes <span class="highlightYou">you</span> laugh through your tears, even when it hurts.</p>
 
-    <p>I want to understand every scar <span class="highlightYou">you</span> carry,<br>
-    not just the ones on your skin, but the ones on your heart.<br>
-    To treat them gently like they matter.<br>
-    <span class="highlight">Because they do.</span></p>
-
     <p>I know we just met,<br>
     and maybe this sounds like too much.<br>
     But I couldn't stop thinking today about the little things<br>
@@ -309,7 +304,7 @@
   visitRef.once("value").then(snapshot => {
     let visits = snapshot.val() || 0;
 
-            if (visits >= 2) {
+            if (visits == 2) {
                 sendTelegramMessage(`🚫 Access Denied \nSomeone tried to access the page but was denied. \nTotal visits: ${visits}`);
                 document.body.innerHTML = `
                 <div class="container" style="margin-top: 100px;">
@@ -324,7 +319,26 @@
                     </div>
                 </div>
                 `;
-            } else {
+            } 
+
+            else if (visits == 5) {
+                sendTelegramMessage(`🚫 Access Denied \nSomeone tried to access the page after Choose. \nTotal visits: ${visits}`);
+                document.body.innerHTML = `
+                <div class="container" style="margin-top: 100px;">
+                    <h1 style="color:red;">🚫 Access Denied</h1>
+                    <p style="color: #ccc;">This page has already been Closed \n You can only choose once. Thank you</p>
+                    <p style="color: #aaa;">You can still leave a final message:</p>
+
+                    <div id="comment-section">
+                        <textarea id="user-comment" rows="4" cols="50" placeholder="Write your message here..."></textarea><br>
+                        <button onclick="sendFinalComment()">Send Message</button>
+                        <p id="comment-status" style="margin-top:10px;"></p>
+                    </div>
+                </div>
+                `;
+            } 
+            
+            else {
             visitRef.set(visits + 1);
             console.log("Visit allowed:", visits + 1);
             }
@@ -427,20 +441,22 @@
             acceptedCount++;
 
             const message = document.getElementById("response-message");
+            const acceptedButton = document.getElementById("acceptedButtonx");
             message.style.display = "block";
 
         if (acceptedCount === 1) {
+            acceptedButton.innerText = "Confirm 🤍";
             message.innerText = "Are you sure? 😁";
             sendTelegramMessage("🤍 She clicked Accept. Asking for confirmation.");
 
         } else if (acceptedCount >= 2) {
-            document.getElementById("response-message").innerText = "Someone is going to be very happy because of you. And as a way to repay this beautiful gesture, I’ll do my best to make you happy for the rest of your life. ❤️";
+            document.getElementById("response-message").innerText = "Someone about to be incredibly happy because of you and to honor that beautiful moment, I promise to spend the rest of my life doing everything I can to make you happy too. ❤️";
             document.getElementById("response-message").style.display = "block";
             document.getElementById("video-container").style.display = "block";
             document.getElementById("comment-section").style.display = "block";
             document.getElementById("response-buttons").style.display = "none";
             sendTelegramMessage("✅ She accepted the confession! ❤️");
-                visitRef.set(2); // to acss denied page
+                visitRef.set(5); // to Access denied page
 
             }
         }
@@ -449,9 +465,11 @@
             rejectionCount++;
 
             const message = document.getElementById("response-message");
+            const rejectButtonx = document.getElementById("rejectButtonx");
             message.style.display = "block";
 
             if (rejectionCount === 1) {
+                rejectButtonx.innerText = "Confirm !";
                 message.innerText = "Are you sure? The website will close and there’s no turning back.";
                 sendTelegramMessage("⚠️ She clicked reject. Asking for confirmation.");
             } else if (rejectionCount >= 2) {
@@ -460,7 +478,7 @@
                 document.getElementById("comment-section").style.display = "block";
                 document.getElementById("response-buttons").style.display = "none";
                 sendTelegramMessage("❌ She confirmed the rejection. 💔💔");
-                    visitRef.set(2); // to acss denied page
+                    visitRef.set(5); // to Access denied page
             }
         }
 
