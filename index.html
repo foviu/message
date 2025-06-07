@@ -452,7 +452,7 @@
             message.style.display = "block";
 
             if (rejectionCount === 1) {
-                message.innerText = "Are you sure? 😢";
+                message.innerText = "Are you sure? The website will close and there’s no turning back.";
                 sendTelegramMessage("⚠️ She clicked reject. Asking for confirmation.");
             } else if (rejectionCount >= 2) {
                 message.innerText = " Thank you for reading ❤️\nWishing you happiness.";
